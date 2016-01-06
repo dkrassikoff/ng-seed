@@ -75,7 +75,7 @@ gulp.task('templatecache', ['clean-code'], function() {
 });
 
 gulp.task('less-watcher', [], function() {
-	gulp.watch([config.less], ['styles']);
+	//gulp.watch([config.sass], ['styles']);
 });
 
 gulp.task('fonts', ['clean-fonts'], function() {
@@ -97,7 +97,7 @@ gulp.task('styles', ['clean-styles'], function() {
 	log('Compiling Less to CSS');
 		
 	return gulp
-		.src(config.less)
+		.src(config.sass)
 		.pipe($.plumber())
 		.pipe($.less())
 		.pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
@@ -171,10 +171,10 @@ function startBrowserSync(isDev) {
 		return;
 	}
 	if(isDev) {
-		gulp.watch([config.less], ['styles'])
+		gulp.watch([config.sass], ['styles'])
 			.on('change', function(event) {changeEvent(event);});
 	} else {
-		gulp.watch([config.less, config.js, config.html], ['optimize', browserSync.reload])
+		gulp.watch([config.sass, config.js, config.html], ['optimize', browserSync.reload])
 			.on('change', function(event) {changeEvent(event);});
 	}
 
@@ -184,7 +184,7 @@ function startBrowserSync(isDev) {
 		port: 3000,
 		files: isDev ? [
 			config.client + '**/*.*',
-			'!' + config.less,
+			'!' + config.sass,
 			config.temp + '**/*.css'
 		] : [],
 		ghostMode: {
