@@ -11,7 +11,7 @@ module.exports = function() {
 		],
 		build: './build/',
 		client: client,
-		css: temp + 'styles.css',
+		css: temp + 'style.css',
 		//fonts:
 		html: clientApp + '**/*.html',
 		htmltemplates: clientApp + '**/*.html',
@@ -21,7 +21,7 @@ module.exports = function() {
 			clientApp + '**/*.module.js',
 			clientApp + '**/*.js'
 		],
-		sass: client + 'styles/styles.sass',
+		sass: client + 'sass/style.scss',
 		server: server,
 		temp: temp,
 		browserReloadDelay: 1000,

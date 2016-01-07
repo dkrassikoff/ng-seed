@@ -1,4 +1,3 @@
-
 var gulp = require('gulp');
 var del = require('del');
 var args = require('yargs').argv;
@@ -37,7 +36,7 @@ gulp.task('serve-build', ['optimize'], function() {
 	serve(false);
 });
 
-gulp.task('serve-dev', ['inject'], function() {
+gulp.task('serve-dev', ['inject', 'styles', 'templatecache', 'wiredep'], function() {
 	serve(true);
 });
 
@@ -74,8 +73,8 @@ gulp.task('templatecache', ['clean-code'], function() {
 		.pipe(gulp.dest(config.temp));
 });
 
-gulp.task('less-watcher', [], function() {
-	//gulp.watch([config.sass], ['styles']);
+gulp.task('sass-watcher', [], function() {
+	gulp.watch('./sass/**/*.scss', ['sass']);
 });
 
 gulp.task('fonts', ['clean-fonts'], function() {
@@ -94,14 +93,15 @@ gulp.task('images', ['clean-images'], function() {
 });
 
 gulp.task('styles', ['clean-styles'], function() {
-	log('Compiling Less to CSS');
-		
+	log('Compiling Sass to CSS');
+	
 	return gulp
 		.src(config.sass)
-		.pipe($.plumber())
-		.pipe($.less())
-		.pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-		.pipe(gulp.dest(config.temp));
+    	.pipe($.plumber())
+    	.pipe($.sass().on('error', $.sass.logError))
+    	.pipe($.sass({outputStyle: 'expanded'}))
+    	.pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+    	.pipe(gulp.dest(config.temp));
 });
 
 gulp.task('clean-code', function() {
