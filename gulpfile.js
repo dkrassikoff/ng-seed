@@ -22,11 +22,11 @@ gulp.task('optimize', ['inject', 'styles', 'templatecache', 'wiredep'], function
 		.pipe(cssFilter)
 		.pipe($.csso())
 		.pipe(cssFilter.restore)
-		.pipe(assets.restore())
 		.pipe(jsFilter)
 		.pipe($.uglify())
 		.pipe(jsFilter.restore)
 		.pipe($.rev())
+		.pipe(assets.restore())
 		.pipe($.useref())
 		.pipe($.revReplace())
 		.pipe(gulp.dest(config.build));
@@ -122,7 +122,12 @@ gulp.task('clean-images', function() {
 });
 
 gulp.task('clean-styles', function() {
-	return clean(config.temp + '**/*.css');
+	var files = [].concat(
+		config.temp + '**/*.css',
+		config.build + '**/*.css'
+	);
+
+	return clean(files);
 });
 
 gulp.task('clean', function() {
