@@ -74,7 +74,7 @@ gulp.task('templatecache', ['clean-code'], function() {
 });
 
 gulp.task('sass-watcher', [], function() {
-	gulp.watch('./sass/**/*.scss', ['sass']);
+	gulp.watch(config.sass + '*.*', ['styles']);
 });
 
 gulp.task('fonts', ['clean-fonts'], function() {
@@ -96,7 +96,7 @@ gulp.task('styles', ['clean-styles'], function() {
 	log('Compiling Sass to CSS');
 	
 	return gulp
-		.src(config.sass)
+		.src(config.sass + 'style.scss')
     	.pipe($.plumber())
     	.pipe($.sass().on('error', $.sass.logError))
     	.pipe($.sass({outputStyle: 'expanded'}))
@@ -176,10 +176,10 @@ function startBrowserSync(isDev) {
 		return;
 	}
 	if(isDev) {
-		gulp.watch([config.sass], ['styles'])
+		gulp.watch([config.sass + '*.*'], ['styles'])
 			.on('change', function(event) {changeEvent(event);});
 	} else {
-		gulp.watch([config.sass, config.js, config.html], ['optimize', browserSync.reload])
+		gulp.watch([config.sass + '*.*', config.js, config.html], ['optimize', browserSync.reload])
 			.on('change', function(event) {changeEvent(event);});
 	}
 
@@ -190,7 +190,7 @@ function startBrowserSync(isDev) {
 		files: isDev ? [
 			config.client + '**/*.*',
 			'!' + config.sass,
-			config.temp + '**/*.css'
+			config.css
 		] : [],
 		ghostMode: {
 			clicks: true,

@@ -21,7 +21,7 @@ module.exports = function() {
 			clientApp + '**/*.module.js',
 			clientApp + '**/*.js'
 		],
-		sass: client + 'sass/style.scss',
+		sass: client + 'sass/',
 		server: server,
 		temp: temp,
 		browserReloadDelay: 1000,
