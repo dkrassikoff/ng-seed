@@ -8,7 +8,6 @@
 			/* Cross-app modules */
 
 			/* 3rd-party modules */
-			'ui.router',
 		]);
 
 })();
